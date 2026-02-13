@@ -1,0 +1,9 @@
+faster-whisper
+coqui-tts
+torch
+torchaudio
+transformers==4.46.2
+pydub
+soundfile
+numpy
+omegaconf
