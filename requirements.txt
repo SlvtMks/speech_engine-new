@@ -5,5 +5,8 @@ torchaudio
 transformers==4.46.2
 pydub
 soundfile
-numpy
+numpy<2.0,>=1.25.2
 omegaconf
+fastapi
+uvicorn[standard]
+python-multipart

@@ -31,10 +31,22 @@ class SpeechToText:
         model_size : str, optional
             Размер / имя модели faster-whisper. По умолчанию "large-v3".
         """
-        self.model_size = model_size
+        # Позволяем переопределять размер модели и устройство через переменные окружения.
+        # Это удобно для продакшена и on-prem установок.
+        env_model_size = os.getenv("SPEECH_ENGINE_STT_MODEL_SIZE")
+        self.model_size = env_model_size or model_size
 
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        compute_type = "float16" if device == "cuda" else "int8"
+        env_device = os.getenv("SPEECH_ENGINE_DEVICE")
+        if env_device in {"cpu", "cuda"}:
+            device = env_device
+        else:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        env_compute_type = os.getenv("SPEECH_ENGINE_COMPUTE_TYPE")
+        if env_compute_type:
+            compute_type = env_compute_type
+        else:
+            compute_type = "float16" if device == "cuda" else "int8"
 
         logger.info(
             "Инициализация SpeechToText с моделью '%s' на устройстве '%s' (%s).",

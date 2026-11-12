@@ -3,7 +3,13 @@ from __future__ import annotations
 from typing import Any
 
 __version__ = "0.1.0"
-__all__ = ["SpeechToText", "TextToSpeech", "__version__"]
+__all__ = ["AgentEngine", "SpeechToText", "TextToSpeech", "__version__"]
+
+
+def AgentEngine(*args: Any, **kwargs: Any):
+    from .agent import AgentEngine as _AgentEngine
+
+    return _AgentEngine(*args, **kwargs)
 
 
 def SpeechToText(*args: Any, **kwargs: Any):

@@ -25,6 +25,61 @@
 pip install -r requirements.txt
 ```
 
+---
+
+## Запуск API (FastAPI)
+
+Проект содержит HTTP API (см. `speech_engine/api.py`).
+
+### Локально
+
+```bash
+uvicorn speech_engine.api:app --host 0.0.0.0 --port 8000
+```
+
+Проверка:
+
+```bash
+curl http://localhost:8000/health
+```
+
+---
+
+## Запуск Web UI (Next.js)
+
+Фронтенд находится в директории `web/`.
+
+```bash
+cd web
+npm ci
+npm run dev
+```
+
+По умолчанию фронт ожидает API по базовому URL (см. `NEXT_PUBLIC_API_BASE_URL` в Docker/Compose ниже).
+
+---
+
+## Запуск через Docker Compose (backend + web)
+
+Самый простой способ поднять всё вместе:
+
+```bash
+docker compose up --build
+```
+
+- Backend: `http://localhost:8000`
+- Web: `http://localhost:3000`
+
+---
+
+## Тесты
+
+Тесты находятся в `tests/` и используют стандартный `unittest`.
+
+```bash
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
 ### 2. Установка ffmpeg (обязательно для pydub)
 
 **Windows:**

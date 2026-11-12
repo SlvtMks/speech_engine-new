@@ -32,7 +32,13 @@ class TextToSpeech:
     """
 
     def __init__(self) -> None:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        # Позволяем управлять устройством через SPEECH_ENGINE_DEVICE.
+        env_device = os.getenv("SPEECH_ENGINE_DEVICE")
+        if env_device in {"cpu", "cuda"}:
+            device = env_device
+        else:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+
         self.device = device
         self._models: Dict[str, Any] = {}
         logger.info("Инициализация TextToSpeech на устройстве '%s'.", self.device)

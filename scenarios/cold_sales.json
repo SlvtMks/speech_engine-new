@@ -1,0 +1,181 @@
+{
+  "name": "cold_sales_intro",
+  "language": "ru",
+  "start_step": "greeting",
+  "fallback_intent": "fallback",
+  "intents": {
+    "positive": [
+      "да",
+      "можно",
+      "говорите",
+      "слушаю",
+      "интересно",
+      "актуально"
+    ],
+    "negative": [
+      "нет",
+      "не интересно",
+      "не актуально",
+      "не надо",
+      "откаж",
+      "уберите"
+    ],
+    "callback": [
+      "перезвон",
+      "позже",
+      "занят",
+      "неудобно",
+      "завтра"
+    ],
+    "price": [
+      "цена",
+      "сколько стоит",
+      "стоимость",
+      "тариф"
+    ],
+    "human": [
+      "оператор",
+      "человек",
+      "менеджер",
+      "специалист"
+    ],
+    "fallback": []
+  },
+  "steps": {
+    "greeting": {
+      "say": "Здравствуйте. Меня зовут Анна, я звоню по поводу привлечения клиентов. Подскажите, удобно сейчас говорить одну минуту?",
+      "status": "started",
+      "transitions": {
+        "positive": {
+          "next_step": "qualification",
+          "status": "interested"
+        },
+        "negative": {
+          "next_step": "finish_negative",
+          "status": "not_interested",
+          "finish": true
+        },
+        "callback": {
+          "next_step": "callback",
+          "status": "callback_requested",
+          "finish": true
+        },
+        "human": {
+          "next_step": "handoff",
+          "status": "handoff_requested",
+          "handoff": true
+        },
+        "fallback": {
+          "say": "Извините, уточню: вам удобно сейчас коротко обсудить привлечение клиентов?",
+          "next_step": "greeting",
+          "status": "clarification"
+        }
+      }
+    },
+    "qualification": {
+      "say": "Подскажите, сейчас для вашей компании актуально получать больше заявок или звонков от новых клиентов?",
+      "status": "qualifying",
+      "transitions": {
+        "positive": {
+          "next_step": "offer",
+          "status": "qualified"
+        },
+        "price": {
+          "next_step": "price",
+          "status": "price_question"
+        },
+        "negative": {
+          "next_step": "finish_negative",
+          "status": "not_interested",
+          "finish": true
+        },
+        "callback": {
+          "next_step": "callback",
+          "status": "callback_requested",
+          "finish": true
+        },
+        "human": {
+          "next_step": "handoff",
+          "status": "handoff_requested",
+          "handoff": true
+        },
+        "fallback": {
+          "say": "Правильно понимаю, что вопрос новых заявок для вас сейчас не в приоритете?",
+          "next_step": "qualification",
+          "status": "clarification"
+        }
+      }
+    },
+    "offer": {
+      "say": "Тогда я могу передать ваш контакт специалисту, он задаст пару вопросов и предложит вариант под вашу нишу. Удобно, если он свяжется с вами сегодня?",
+      "status": "offer",
+      "transitions": {
+        "positive": {
+          "next_step": "handoff",
+          "status": "lead_ready",
+          "handoff": true
+        },
+        "price": {
+          "next_step": "price",
+          "status": "price_question"
+        },
+        "callback": {
+          "next_step": "callback",
+          "status": "callback_requested",
+          "finish": true
+        },
+        "negative": {
+          "next_step": "finish_negative",
+          "status": "not_interested",
+          "finish": true
+        },
+        "fallback": {
+          "say": "Могу передать вас специалисту, чтобы он коротко рассказал условия. Соединить?",
+          "next_step": "offer",
+          "status": "clarification"
+        }
+      }
+    },
+    "price": {
+      "say": "Стоимость зависит от ниши и объема заявок. Я могу передать вас специалисту, чтобы он быстро сориентировал по вариантам.",
+      "status": "price_question",
+      "transitions": {
+        "positive": {
+          "next_step": "handoff",
+          "status": "lead_ready",
+          "handoff": true
+        },
+        "negative": {
+          "next_step": "finish_negative",
+          "status": "not_interested",
+          "finish": true
+        },
+        "callback": {
+          "next_step": "callback",
+          "status": "callback_requested",
+          "finish": true
+        },
+        "fallback": {
+          "say": "Если удобно, специалист уточнит задачу и назовет порядок стоимости.",
+          "next_step": "price",
+          "status": "clarification"
+        }
+      }
+    },
+    "callback": {
+      "say": "Хорошо, зафиксировала перезвон. Подскажите, в какое время вам будет удобнее?",
+      "status": "callback_requested",
+      "finish": true
+    },
+    "handoff": {
+      "say": "Хорошо, передаю информацию специалисту. Он сможет продолжить разговор и ответить на детали.",
+      "status": "handoff_requested",
+      "handoff": true
+    },
+    "finish_negative": {
+      "say": "Поняла вас. Спасибо за ответ, хорошего дня.",
+      "status": "not_interested",
+      "finish": true
+    }
+  }
+}

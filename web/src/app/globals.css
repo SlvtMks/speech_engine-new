@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #2D4A36;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #1B3B26;
+  --color-secondary-foreground: #FFFFFF;
+  --color-accent: #CD853F;
+  --color-accent-foreground: #1A1A1A;
+  --color-background: #FEFEFE;
+  --color-foreground: #1A1A1A;
+  --color-surface: #F8F9FA;
+  --color-card: #FFFFFF;
+  --color-muted: #F8F9FA;
+  --color-border: #E5E7EB;
+  --color-success: #059669;
+  --color-warning: #D97706;
+  --color-error: #DC2626;
+  --color-text-secondary: #6B7280;
+
+  --color-input: var(--color-border);
+  --color-ring: var(--color-accent);
+  --color-destructive: #DC2626;
+  --color-destructive-foreground: #FFFFFF;
+  --color-muted-foreground: #6B7280;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1A1A1A;
+  --color-card-foreground: #1A1A1A;
+  --color-surface-foreground: #1A1A1A;
+  --color-success-foreground: #FFFFFF;
+  --color-warning-foreground: #FFFFFF;
+  --color-error-foreground: #FFFFFF;
+  --color-text-primary: #1A1A1A;
+
+  --radius: 0.75rem;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+

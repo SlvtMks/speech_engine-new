@@ -5,8 +5,6 @@ import logging
 import sys
 from typing import Any, Dict
 
-from .stt import SpeechToText
-
 
 def setup_logging(verbosity: int) -> None:
     """
@@ -30,6 +28,9 @@ def setup_logging(verbosity: int) -> None:
 
 
 def _cmd_stt(args: argparse.Namespace) -> int:
+    # Ленивый импорт, чтобы "import speech_engine.cli" не требовал тяжёлых зависимостей.
+    from .stt import SpeechToText
+
     stt = SpeechToText()
     language = None if args.lang == "auto" else args.lang
 
@@ -78,6 +79,7 @@ def _cmd_chat(args: argparse.Namespace) -> int:
     logger = logging.getLogger(__name__)
 
     # Ленивые импорты
+    from .stt import SpeechToText
     from .tts import TextToSpeech
 
     stt = SpeechToText()
@@ -105,7 +107,7 @@ def _cmd_chat(args: argparse.Namespace) -> int:
     elif lang_lower.startswith("en"):
         lang_for_tts = "en"
 
-    print("=== CHAT (STT → TTS) ===")
+    print("=== CHAT (STT -> TTS) ===")
     print(f"Detected language: {language}")
     print("Recognized text:\n")
     print(recognized_text)
@@ -125,7 +127,7 @@ def _cmd_chat(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="speech_engine",
-        description="Офлайн-движок STT ⇄ TTS (faster-whisper + Silero TTS для RU + Coqui TTS для EN)",
+        description="Офлайн-движок STT <-> TTS (faster-whisper + Silero TTS для RU + Coqui TTS для EN)",
     )
     parser.add_argument(
         "-v",
@@ -188,10 +190,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     tts_parser.set_defaults(func=_cmd_tts)
 
-    # CHAT (STT → TTS)
+    # CHAT (STT -> TTS)
     chat_parser = subparsers.add_parser(
         "chat",
-        help="Распознать речь и озвучить её обратно (STT → TTS).",
+        help="Распознать речь и озвучить её обратно (STT -> TTS).",
     )
     chat_parser.add_argument(
         "input",
