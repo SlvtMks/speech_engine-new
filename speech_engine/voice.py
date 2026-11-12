@@ -6,7 +6,6 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
-import torch
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +88,12 @@ def _get_device() -> str:
     env_device = os.getenv("SPEECH_ENGINE_DEVICE")
     if env_device in {"cpu", "cuda"}:
         return env_device
+
+    try:
+        import torch
+    except ImportError:
+        return "cpu"
+
     return "cuda" if torch.cuda.is_available() else "cpu"
 
 
